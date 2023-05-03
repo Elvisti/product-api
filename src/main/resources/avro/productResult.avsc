@@ -1,0 +1,15 @@
+{
+  "namespace": "com.productapi.avros",
+  "type": "record",
+  "name": "ProductResult",
+  "fields": [
+    {
+      "name": "name",
+      "type": {
+        "type": "array",
+        "items": "com.productapi.avros.Products"
+      },
+      "default": []
+    }
+  ]
+}

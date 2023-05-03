@@ -1,0 +1,23 @@
+{
+  "namespace": "com.productapi.avros",
+  "type": "record",
+  "name": "Products",
+  "fields": [
+    {
+      "name": "name",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    },
+    {
+      "name": "code",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    }
+  ]
+}

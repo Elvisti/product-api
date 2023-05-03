@@ -1,0 +1,15 @@
+{
+  "namespace": "com.productapi.avros",
+  "type": "record",
+  "name": "ProductRequest",
+  "fields": [
+    {
+      "name": "requestIdentification",
+      "type": "com.productapi.avros.RequestIdentification"
+    },
+    {
+      "name": "productCommand",
+      "type": "com.productapi.avros.ProductCommand"
+    }
+  ]
+}

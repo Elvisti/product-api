@@ -1,0 +1,15 @@
+{
+  "namespace": "com.productapi.avros",
+  "type": "record",
+  "name": "RequestIdentification",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string"
+    },
+    {
+      "name": "instanceID",
+      "type": "string"
+    }
+  ]
+}

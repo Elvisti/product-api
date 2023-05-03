@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.0.6</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.productapi</groupId>
+	<artifactId>productapi</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>productapi</name>
+	<description>API with stored product data </description>
+	<properties>
+		<java.version>11</java.version>
+		<avro.generation.phase>none</avro.generation.phase>
+		<kafkaSerializer.version>5.5.0</kafkaSerializer.version>
+		<avro.version>1.9.2</avro.version>
+		<lombok.version>1.18.20</lombok.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>confluent</id>
+			<url>https://packages.confluent.io/maven/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+		<!-- JPA dependency -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- Mysql dependency -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.22</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>io.confluent</groupId>
+			<artifactId>kafka-avro-serializer</artifactId>
+			<version>${kafkaSerializer.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.avro</groupId>
+			<artifactId>avro</artifactId>
+			<version>${avro.version}</version>
+		</dependency>
+
+		<!-- Lombok dependency -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<!--for specific record -->
+			<plugin>
+				<groupId>org.apache.avro</groupId>
+				<artifactId>avro-maven-plugin</artifactId>
+				<version>1.10.1</version>
+				<executions>
+					<execution>
+						<!-- Phase in which to generate the Avro classes; defaults to "none". Can be overridden, for
+                       example, with: "mvn clean install -Davro.generation.phase=generate-sources" -->
+						<phase>${avro.generation.phase}</phase>
+						<goals>
+							<goal>schema</goal>
+						</goals>
+						<configuration>
+							<createSetters>false</createSetters>
+							<sourceDirectory>${project.basedir}/src/main/resources/avro/</sourceDirectory>
+							<outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
+							<fieldVisibility>PRIVATE</fieldVisibility>
+							<stringType>String</stringType>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<imports>
+						<!-- Product imports -->
+						<import>${project.basedir}/src/main/resources/avro/requestIdentification.avsc</import>
+						<import>${project.basedir}/src/main/resources/avro/productCommand.avsc</import>
+						<import>${project.basedir}/src/main/resources/avro/productRequest.avsc</import>
+						<import>${project.basedir}/src/main/resources/avro/products.avsc</import>
+						<import>${project.basedir}/src/main/resources/avro/productResult.avsc</import>
+					</imports>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
