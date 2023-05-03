@@ -45,7 +45,7 @@ public class ProductRestController {
     @GetMapping("/{search}")
     public List<Product> getProducts(@PathVariable("search") String search) {
         List<Product> byName = repository.findByProductLikeCaseInsensitive(search);
-        LOGGER.info("Name finded --- {}", byName);
+        LOGGER.info("Name found --- {}", byName);
 
         return byName;
     }
